@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="maven-antrun-" default="main"  >
+<target name="main">
+  <copy todir="/home/gontar/suite/geoexplorer/target/geoexplorer-src/WEB-INF/app">
+    <fileset dir="app">
+      <exclude name="**/externals/**"/>
+      <exclude name="**/script/**"/>
+    </fileset>
+  </copy>
+  <copy todir="/home/gontar/suite/geoexplorer/target/geoexplorer-src/WEB-INF/app/stick">
+    <fileset dir="externals/stick">
+      <include name="**/lib/**"/>
+      <include name="package.json"/>
+    </fileset>
+  </copy>
+  <copy todir="/home/gontar/suite/geoexplorer/target/geoexplorer-src/WEB-INF/app/static/externals/ext">
+    <fileset dir="app/static/externals/ext">
+      <exclude name="**/*debug*.js"/>
+      <exclude name="**/ext-all-notheme.css"/>
+      <exclude name="**/xtheme-blue.css"/>
+    </fileset>
+  </copy>
+  <copy todir="/home/gontar/suite/geoexplorer/target/geoexplorer-src/WEB-INF/app/static/externals/openlayers/theme">
+    <fileset dir="app/static/externals/openlayers/theme"/>
+  </copy>
+  <copy todir="/home/gontar/suite/geoexplorer/target/geoexplorer-src/WEB-INF/app/static/externals/geoext/resources">
+    <fileset dir="app/static/externals/geoext/resources">
+      <exclude name="**/geoext-all-debug.css"/>
+      <exclude name="**/gxtheme-slate.css"/>
+      <exclude name="**/slate/**"/>
+    </fileset>
+  </copy>
+  <copy todir="/home/gontar/suite/geoexplorer/target/geoexplorer-src/WEB-INF/app/static/externals/gxp/src/theme">
+    <fileset dir="app/static/externals/gxp/src/theme"/>
+  </copy>
+  <copy todir="/home/gontar/suite/geoexplorer/target/geoexplorer-src/WEB-INF/app/static/externals/printpreview/resources">
+    <fileset dir="app/static/externals/printpreview/resources"/>
+  </copy>
+  <mkdir dir="/home/gontar/suite/geoexplorer/target/geoexplorer-src/WEB-INF/app/static/script"/>
+  <java fork="true" classname="org.ringojs.tools.launcher.Main" failonerror="true">
+    <classpath>
+      <fileset dir="/home/gontar/suite/geoexplorer/target/geoexplorer-src/WEB-INF/lib">
+        <include name="**/*.jar"/>
+      </fileset>
+    </classpath>
+    <sysproperty path="/home/gontar/suite/geoexplorer/target/geoexplorer-src/WEB-INF" key="ringo.home"/>
+    <arg path="externals/buildkit/lib/buildkit/build.js"/>
+    <arg value="-u"/>
+    <arg value="-o"/>
+    <arg path="/home/gontar/suite/geoexplorer/target/geoexplorer-src/WEB-INF/app/static/script"/>
+    <arg path="buildjs.cfg"/>
+  </java>
+  <move file="/home/gontar/suite/geoexplorer/target/geoexplorer-src/WEB-INF/app/static/script/GeoExplorer.js" tofile="/home/gontar/suite/geoexplorer/target/geoexplorer-src/WEB-INF/app/static/script/GeoExplorer-debug.js"/>
+  <java fork="true" classname="org.ringojs.tools.launcher.Main" failonerror="true">
+    <classpath>
+      <fileset dir="/home/gontar/suite/geoexplorer/target/geoexplorer-src/WEB-INF/lib">
+        <include name="**/*.jar"/>
+      </fileset>
+    </classpath>
+    <sysproperty path="/home/gontar/suite/geoexplorer/target/geoexplorer-src/WEB-INF" key="ringo.home"/>
+    <arg path="externals/buildkit/lib/buildkit/build.js"/>
+    <arg value="-o"/>
+    <arg path="/home/gontar/suite/geoexplorer/target/geoexplorer-src/WEB-INF/app/static/script"/>
+    <arg path="buildjs.cfg"/>
+  </java>
+</target>
+</project>
